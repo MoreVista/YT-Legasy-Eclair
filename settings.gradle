@@ -1,0 +1,2 @@
+rootProject.name = "YT-Legasy-A2.1"
+include ':app'

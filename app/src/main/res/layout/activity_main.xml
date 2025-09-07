@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#FFFFFF">
+
+    <!-- 検索入力欄 -->
+    <EditText
+        android:id="@+id/editSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="検索キーワードを入力"
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
+        android:padding="5dp"
+        android:textColor="#000000"
+        android:background="@android:drawable/edit_text" />
+
+    <!-- 検索ボタン -->
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="検索"
+        android:layout_marginTop="5dp"
+        android:padding="5dp" />
+
+    <!-- 結果一覧 -->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingTop="5dp" />
+
+</LinearLayout>
