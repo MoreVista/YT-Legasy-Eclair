@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Invidiousインスタンス設定 -->
+    <EditTextPreference
+        android:key="invidious_instance"
+        android:title="Invidiousインスタンス"
+        android:defaultValue="http://192.168.2.12:3000"
+        android:inputType="textUri" />
+
+    <!-- 動画再生アプリ設定 -->
+    <EditTextPreference
+        android:key="video_player"
+        android:title="動画再生アプリ（パッケージ名）"
+        android:defaultValue="org.videolan.vlc"
+        android:inputType="text" />
+
+</PreferenceScreen>
+

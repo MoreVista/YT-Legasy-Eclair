@@ -7,6 +7,11 @@ import android.widget.*;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 
 import org.json.*;
 
@@ -24,10 +29,20 @@ public class MainActivity extends Activity {
     ArrayList<String> videoIds = new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
+    // 設定用
+    SharedPreferences prefs;
+    String invidiousInstance = "http://192.168.2.12:3000";
+    String videoPlayerPackage = "org.videolan.vlc";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // SharedPreferences初期化
+        prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        invidiousInstance = prefs.getString("invidious_instance", "http://192.168.2.12:3000");
+        videoPlayerPackage = prefs.getString("video_player", "org.videolan.vlc");
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -65,11 +80,64 @@ public class MainActivity extends Activity {
                 //new android.os.Handler().postDelayed(new Runnable() {
                 //    @Override
                 //    public void run() {
-                       playWithVLC(tappedVideoUrl);
+                playWithSelectedPlayer(tappedVideoUrl);
                 //    }
                 //}, 5000);
             }
         });
+    }
+
+    // メニュー生成（右上設定ボタン用）
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "設定");
+        return true;
+    }
+
+    // メニュー選択時
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 0) {
+            showSettingsDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettingsDialog() {
+        final EditText inputInstance = new EditText(this);
+        inputInstance.setText(invidiousInstance);
+
+        final EditText inputPlayer = new EditText(this);
+        inputPlayer.setText(videoPlayerPackage);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(new TextView(this) {{
+            setText("InvidiousインスタンスURL:");
+        }});
+        layout.addView(inputInstance);
+        layout.addView(new TextView(this) {{
+            setText("動画再生アプリパッケージ名:");
+        }});
+        layout.addView(inputPlayer);
+
+        new AlertDialog.Builder(this)
+                .setTitle("設定")
+                .setView(layout)
+                .setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        invidiousInstance = inputInstance.getText().toString().trim();
+                        videoPlayerPackage = inputPlayer.getText().toString().trim();
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("invidious_instance", invidiousInstance);
+                        editor.putString("video_player", videoPlayerPackage);
+                        editor.commit();
+                        Toast.makeText(MainActivity.this, "設定保存しました", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("キャンセル", null)
+                .show();
     }
 
     private void searchVideos(final String query) {
@@ -78,7 +146,7 @@ public class MainActivity extends Activity {
                 try {
                     String encoded = URLEncoder.encode(query, "UTF-8");
                     Log.d("YTClient", "検索開始: " + query);
-                    URL url = new URL("http://192.168.2.12:3000/api/v1/search?q=" + encoded);
+                    URL url = new URL(invidiousInstance + "/api/v1/search?q=" + encoded);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     InputStream is = conn.getInputStream();
@@ -119,7 +187,7 @@ public class MainActivity extends Activity {
                 String videoId = obj.getString("videoId");
 
                 // MP4直リンクを取得。
-                String videoUrl = "http://192.168.2.12:3000/latest_version?id=" + videoId;
+                String videoUrl = invidiousInstance + "/latest_version?id=" + videoId;
 
                 titles.add(title);
                 videoUrls.add(videoUrl);
@@ -148,10 +216,10 @@ public class MainActivity extends Activity {
             });
         }
     }
-    
+
     //プレロード機能(未使用)
     private void preloadVideo(String videoId) {
-        final String preloadUrl = "http://192.168.2.12:3000/latest_version?id=" + videoId;
+        final String preloadUrl = invidiousInstance + "/latest_version?id=" + videoId;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -178,16 +246,14 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-
-
-    private void playWithVLC(String videoUrl) {
+    private void playWithSelectedPlayer(String videoUrl) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.parse(videoUrl), "video/mp4");
-            intent.setPackage("org.videolan.vlc");
+            intent.setPackage(videoPlayerPackage);
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "VLCが見つかりません", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "指定された再生アプリが見つかりません", Toast.LENGTH_SHORT).show();
         }
     }
 }
