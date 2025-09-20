@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Android/YTLegasyA21/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20625" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/preferences.xml" value="0.1" />
       </map>
     </option>
   </component>

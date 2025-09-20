@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     ArrayList<String> videoIds = new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
+
     // 設定用
     SharedPreferences prefs;
     String invidiousInstance = "http://192.168.2.12:3000";
@@ -55,12 +56,22 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 String query = editSearch.getText().toString().trim();
                 if (!query.equals("")) {
-                    searchVideos(query);
+                    if (isVideoId(query)) {
+                        // 入力が動画ID(直接再生)
+                        String videoUrl = invidiousInstance + "/latest_version?id=" + query;
+                        Log.d("YTClient", "入力された動画ID: " + query);
+                        Log.d("YTClient", "生成されたURL: " + videoUrl);
+                        playWithSelectedPlayer(videoUrl);
+                    } else {
+                        // 通常の検索
+                        searchVideos(query);
+                    }
                 }
             }
         });
 
-        // クリックリスナーは onCreate 内で1回だけ
+
+        // クリックリスナー
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -87,7 +98,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    // メニュー生成（右上設定ボタン用）
+    // メニュー生成
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "設定");
@@ -168,6 +179,11 @@ public class MainActivity extends Activity {
         }).start();
     }
 
+    // 動画ID判定
+    private boolean isVideoId(String input) {
+        return input.matches("^[a-zA-Z0-9_-]{11}$");
+    }
+
     private void parseJson(final String jsonStr) {
         try {
             JSONArray array = new JSONArray(jsonStr);
@@ -180,13 +196,12 @@ public class MainActivity extends Activity {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
 
-                // videoId が存在しない場合はスキップ
                 if (!obj.has("videoId")) continue;
 
                 String title = obj.optString("title", "無題");
                 String videoId = obj.getString("videoId");
 
-                // MP4直リンクを取得。
+                // MP4直リンクを取得
                 String videoUrl = invidiousInstance + "/latest_version?id=" + videoId;
 
                 titles.add(title);
