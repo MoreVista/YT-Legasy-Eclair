@@ -7,27 +7,30 @@
     android:background="#FFFFFF">
 
     <!-- 検索入力欄 -->
+
+    <!-- 検索ボタン -->
+
+    <!-- 結果一覧 -->
+
     <EditText
         android:id="@+id/editSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="検索キーワードを入力"
-        android:singleLine="true"
+        android:background="@android:drawable/edit_text"
+        android:hint="検索ワード or 動画ID"
         android:imeOptions="actionSearch"
         android:padding="5dp"
-        android:textColor="#000000"
-        android:background="@android:drawable/edit_text" />
+        android:singleLine="true"
+        android:textColor="#000000" />
 
-    <!-- 検索ボタン -->
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="match_parent"
+        android:layout_width="73dp"
         android:layout_height="wrap_content"
-        android:text="検索"
         android:layout_marginTop="5dp"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:text="検索" />
 
-    <!-- 結果一覧 -->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
