@@ -27,6 +27,10 @@ public class MainActivity extends Activity {
     ArrayList<String> titles = new ArrayList<String>();
     ArrayList<String> videoUrls = new ArrayList<String>();
     ArrayList<String> videoIds = new ArrayList<String>();
+    ArrayList<String> thumbnailUrls = new ArrayList<String>();
+
+
+
     ArrayAdapter<String> adapter;
 
 
@@ -49,8 +53,11 @@ public class MainActivity extends Activity {
         btnSearch = (Button) findViewById(R.id.btnSearch);
         listView = (ListView) findViewById(R.id.listView);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titles);
+        adapter = new VideoListAdapter(this, titles, thumbnailUrls);
         listView.setAdapter(adapter);
+        VideoListAdapter customAdapter = new VideoListAdapter(this, titles, thumbnailUrls);
+        listView.setAdapter(customAdapter);
+        adapter = customAdapter;
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -192,6 +199,7 @@ public class MainActivity extends Activity {
             titles.clear();
             videoUrls.clear();
             videoIds.clear();
+            thumbnailUrls.clear();
 
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
@@ -203,14 +211,34 @@ public class MainActivity extends Activity {
 
                 // MP4直リンクを取得
                 String videoUrl = invidiousInstance + "/latest_version?id=" + videoId;
+//サムネ取得
+                String thumbnailUrl = "";
+                if (obj.has("videoThumbnails")) {
+                    JSONArray thumbs = obj.getJSONArray("videoThumbnails");
+                    if (thumbs.length() > 0) {
+                        JSONObject thumb0 = thumbs.getJSONObject(0);
+                        String relUrl = thumb0.optString("url", "");
+                        if (!relUrl.isEmpty()) {
+                            if (relUrl.startsWith("http")) {
+                                thumbnailUrl = relUrl;
+                            } else {
+                                thumbnailUrl = invidiousInstance + relUrl;
+                            }
+                        }
+                    }
+                }
+
 
                 titles.add(title);
                 videoUrls.add(videoUrl);
                 videoIds.add(videoId);
+                thumbnailUrls.add(thumbnailUrl);
+
 
                 Log.d("YTClient", "title: " + title);
                 Log.d("YTClient", "videoUrl: " + videoUrl);
                 Log.d("YTClient", "videoId: " + videoId);
+
             }
 
             // UIスレッドで ListView 更新

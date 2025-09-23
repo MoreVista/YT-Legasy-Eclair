@@ -1,0 +1,29 @@
+<!-- res/layout/list_item_video.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="8dp"
+        android:background="#CCCCCC" />
+
+    <TextView
+        android:id="@+id/videoTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:textColor="#212121"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="タイトル" />
+
+</LinearLayout>
+

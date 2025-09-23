@@ -14,27 +14,32 @@
 
     <EditText
         android:id="@+id/editSearch"
-        android:layout_width="match_parent"
+        android:layout_width="282dp"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/edit_text"
+        android:background="@drawable/bg_edittext_material"
         android:hint="検索ワード or 動画ID"
         android:imeOptions="actionSearch"
-        android:padding="5dp"
+        android:minHeight="48dp"
+        android:padding="8dp"
         android:singleLine="true"
         android:textColor="#000000" />
 
+
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:text="検索" />
+        android:layout_width="105dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_button_primary"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="検索"
+        android:textColor="@android:color/white" />
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="395dp"
         android:layout_weight="1"
         android:divider="#CCCCCC"
         android:dividerHeight="1dp"
