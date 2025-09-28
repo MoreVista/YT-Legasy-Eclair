@@ -219,7 +219,7 @@ public class MainActivity extends Activity {
                     if (thumbs.length() > 0) {
                         JSONObject thumb0 = thumbs.getJSONObject(0);
                         String relUrl = thumb0.optString("url", "");
-                        if (relUrl != null && relUrl.length() > 0) {  
+                        if (relUrl != null && relUrl.length() > 0) {
                             if (relUrl.startsWith("http")) {
                                 thumbnailUrl = relUrl;
                             } else {
