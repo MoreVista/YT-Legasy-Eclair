@@ -209,16 +209,17 @@ public class MainActivity extends Activity {
                 String title = obj.optString("title", "無題");
                 String videoId = obj.getString("videoId");
 
-                // MP4直リンクを取得
+                // MP4直リンク
                 String videoUrl = invidiousInstance + "/latest_version?id=" + videoId;
-//サムネ取得
+
+                // サムネ取得
                 String thumbnailUrl = "";
                 if (obj.has("videoThumbnails")) {
                     JSONArray thumbs = obj.getJSONArray("videoThumbnails");
                     if (thumbs.length() > 0) {
                         JSONObject thumb0 = thumbs.getJSONObject(0);
                         String relUrl = thumb0.optString("url", "");
-                        if (!relUrl.isEmpty()) {
+                        if (relUrl != null && relUrl.length() > 0) {  
                             if (relUrl.startsWith("http")) {
                                 thumbnailUrl = relUrl;
                             } else {
@@ -228,17 +229,14 @@ public class MainActivity extends Activity {
                     }
                 }
 
-
                 titles.add(title);
                 videoUrls.add(videoUrl);
                 videoIds.add(videoId);
                 thumbnailUrls.add(thumbnailUrl);
 
-
                 Log.d("YTClient", "title: " + title);
                 Log.d("YTClient", "videoUrl: " + videoUrl);
                 Log.d("YTClient", "videoId: " + videoId);
-
             }
 
             // UIスレッドで ListView 更新
@@ -259,6 +257,7 @@ public class MainActivity extends Activity {
             });
         }
     }
+
 
     //プレロード機能(未使用)
     private void preloadVideo(String videoId) {

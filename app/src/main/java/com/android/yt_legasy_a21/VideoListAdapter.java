@@ -48,7 +48,7 @@ public class VideoListAdapter extends ArrayAdapter<String> {
 
         holder.title.setText(title);
 
-        if (thumbUrl != null && !thumbUrl.isEmpty()) {
+        if (thumbUrl != null && thumbUrl.length() > 0) {
             try {
                 Picasso.with(mContext)
                         .load(thumbUrl)
@@ -66,5 +66,6 @@ public class VideoListAdapter extends ArrayAdapter<String> {
 
         return convertView;
     }
+
 }
 
