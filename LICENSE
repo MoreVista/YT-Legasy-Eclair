@@ -19,3 +19,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+----------------------------------------------------------------------------  
+Third-Party Components
+
+This project uses the following third-party library:
+
+- Picasso (https://github.com/square/picasso)  
+  Licensed under the Apache License, Version 2.0  
+  See the original LICENSE file and NOTICE file included in the Picasso distribution.
