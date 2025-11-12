@@ -5,14 +5,14 @@
         android:defaultValue="http://192.168.2.12:3000"
         android:inputType="textUri"
         android:key="invidious_instance"
-        android:title="Invidious instance" />
+        android:title="Invidiousインスタンス" />
 
     <!-- 動画再生アプリ設定 -->
     <EditTextPreference
         android:defaultValue="org.videolan.vlc"
         android:inputType="text"
         android:key="video_player"
-        android:title="App used for video playback (package name)" />
+        android:title="動画再生アプリ（パッケージ名）" />
 
 </PreferenceScreen>
 

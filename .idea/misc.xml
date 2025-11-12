@@ -5,11 +5,15 @@
       <map>
         <entry key="..\:/Android/YTLegasyA21/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.27870370370370373" />
+        <entry key="app/src/main/res/drawable/bg_button_primary.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.27870370370370373" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item_video.xml" value="0.20625" />
+        <entry key="app/src/main/res/menu-ja/menu_main.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.25" />
-        <entry key="app/src/main/res/xml/preferences.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/xml-ja/preferences.xml" value="0.22" />
+        <entry key="app/src/main/res/xml/preferences.xml" value="0.33" />
       </map>
     </option>
   </component>

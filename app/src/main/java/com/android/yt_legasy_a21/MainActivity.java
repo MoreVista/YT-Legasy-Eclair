@@ -82,7 +82,6 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // クラッシュ防止
                 if (position < 0 || position >= videoUrls.size()) {
                     Toast.makeText(MainActivity.this, "無効な選択です", Toast.LENGTH_SHORT).show();
                     return;
@@ -179,6 +178,11 @@ public class MainActivity extends Activity {
                     parseJson(sb.toString());
 
                 } catch (Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "invidiousサーバーへのアクセスに失敗しました", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     e.printStackTrace();
                     Log.e("YTClient", "検索失敗", e);
                 }
